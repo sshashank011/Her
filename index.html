@@ -1,0 +1,1639 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For My Love ❤️</title>
+
+<style>
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --pink: #f29ab5;
+    --light-pink: #ffdce7;
+    --rose: #c44f76;
+    --dark-rose: #7d2947;
+    --wine: #541c32;
+    --cream: #fff8f3;
+    --gold: #d9a75d;
+    --white: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    color: var(--wine);
+    background:
+        radial-gradient(circle at 20% 20%, #ffe9f0, transparent 30%),
+        radial-gradient(circle at 80% 80%, #f9cbd8, transparent 35%),
+        linear-gradient(135deg, #fff4f5, #f8dce5);
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   LOADING / INTRO
+========================================================= */
+
+#introScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle, #f9d8e3, #7d2947);
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+#introScreen.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-content {
+    text-align: center;
+    color: white;
+    padding: 25px;
+}
+
+.intro-heart {
+    font-size: 70px;
+    animation: heartbeat 1.4s infinite;
+}
+
+.intro-content h1 {
+    margin: 20px 0 10px;
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 8vw, 4rem);
+}
+
+.intro-content p {
+    opacity: .85;
+}
+
+.start-btn {
+    margin-top: 30px;
+    border: 1px solid rgba(255,255,255,.5);
+    background: rgba(255,255,255,.15);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: .3s;
+}
+
+.start-btn:hover {
+    background: white;
+    color: var(--rose);
+    transform: translateY(-3px);
+}
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-btn {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(80,20,40,.15);
+    cursor: pointer;
+    font-size: 20px;
+    transition: .3s;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 30px 20px;
+}
+
+.hero-content {
+    width: min(1000px, 95%);
+    text-align: center;
+}
+
+.hero-small {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-size: .75rem;
+    font-weight: bold;
+}
+
+.hero h1 {
+    margin-top: 15px;
+    font-family: Georgia, serif;
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: .95;
+    color: var(--wine);
+}
+
+.hero h1 span {
+    display: block;
+    color: var(--rose);
+    font-style: italic;
+}
+
+.hero-description {
+    max-width: 650px;
+    margin: 25px auto;
+    color: #815366;
+    line-height: 1.8;
+}
+
+/* =========================================================
+   ENVELOPE
+========================================================= */
+
+.envelope-area {
+    margin-top: 40px;
+}
+
+.envelope-wrapper {
+    width: min(350px, 85vw);
+    height: 230px;
+    margin: auto;
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.envelope {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    filter: drop-shadow(0 25px 25px rgba(80,20,40,.2));
+}
+
+.envelope-body {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 78%;
+    border-radius: 0 0 15px 15px;
+    background: linear-gradient(145deg,#fff0f4,#efb7c8);
+    overflow: hidden;
+    z-index: 2;
+}
+
+.envelope-body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        140deg,
+        transparent 49%,
+        rgba(125,41,71,.12) 50%,
+        transparent 51%
+    );
+}
+
+.envelope-body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        40deg,
+        transparent 49%,
+        rgba(125,41,71,.12) 50%,
+        transparent 51%
+    );
+}
+
+.flap {
+    position: absolute;
+    width: 100%;
+    height: 58%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg,#f9d9e2,#e99ab1);
+    clip-path: polygon(0 0,100% 0,50% 100%);
+    transform-origin: top center;
+    transition: 1.2s cubic-bezier(.2,.8,.2,1);
+    z-index: 4;
+}
+
+.envelope-wrapper.open .flap {
+    transform: rotateX(180deg);
+}
+
+.seal {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    background: linear-gradient(135deg,#c44f76,#8d294c);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 27px;
+    z-index: 6;
+    box-shadow: 0 8px 20px rgba(100,20,45,.3);
+    transition: .5s;
+}
+
+.envelope-wrapper.open .seal {
+    transform: translate(-50%,-50%) scale(2);
+    opacity: 0;
+}
+
+.open-text {
+    margin-top: 25px;
+    color: var(--rose);
+    animation: pulse 2s infinite;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section:not(.hero) {
+    padding: 100px 20px;
+}
+
+.section-container {
+    width: min(1000px, 95%);
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: clamp(2rem,6vw,3.5rem);
+    color: var(--wine);
+    margin-bottom: 15px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #936174;
+    margin-bottom: 45px;
+}
+
+/* =========================================================
+   LOVE LETTER
+========================================================= */
+
+.letter-section {
+    background: rgba(255,255,255,.28);
+}
+
+.letter {
+    max-width: 750px;
+    margin: auto;
+    padding: 45px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.65);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,.7);
+    box-shadow: 0 25px 60px rgba(100,30,55,.12);
+}
+
+.letter-top {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+.typewriter {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 2;
+    color: #684052;
+    white-space: pre-line;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 18px;
+    background: var(--rose);
+    animation: blink .7s infinite;
+}
+
+/* =========================================================
+   GIFT CARD
+========================================================= */
+
+.gift-container {
+    display: flex;
+    justify-content: center;
+}
+
+.gift-card {
+    width: min(480px,95%);
+    padding: 45px 30px;
+    text-align: center;
+    border-radius: 30px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,241,244,.9));
+    box-shadow: 0 30px 70px rgba(80,20,40,.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.gift-card::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: rgba(242,154,181,.15);
+    border-radius: 50%;
+    top: -120px;
+    right: -80px;
+}
+
+.gift-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.gift-title {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    color: var(--rose);
+}
+
+.gift-value {
+    margin: 20px 0;
+    font-family: Georgia, serif;
+    font-size: 2.2rem;
+    color: var(--wine);
+}
+
+.gift-description {
+    color: #815366;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   MEMORIES / PHOTO GALLERY
+========================================================= */
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.photo {
+    height: 330px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg,#f3c4d2,#fff0e8);
+    box-shadow: 0 15px 30px rgba(80,20,40,.15);
+}
+
+.photo:nth-child(2) {
+    transform: translateY(30px);
+}
+
+.photo:nth-child(3) {
+    transform: translateY(60px);
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+
+.photo:hover img {
+    transform: scale(1.08);
+}
+
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+    color: var(--rose);
+    text-align: center;
+    padding: 20px;
+}
+
+/* =========================================================
+   OPEN WHEN
+========================================================= */
+
+.open-when-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.when-card {
+    border: none;
+    border-radius: 22px;
+    padding: 35px 20px;
+    background: rgba(255,255,255,.65);
+    box-shadow: 0 15px 35px rgba(80,20,40,.1);
+    cursor: pointer;
+    color: var(--wine);
+    transition: .3s;
+}
+
+.when-card:hover {
+    transform: translateY(-8px);
+}
+
+.when-icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.when-card h3 {
+    font-family: Georgia, serif;
+    margin-bottom: 8px;
+}
+
+.when-card p {
+    color: #946072;
+    font-size: .85rem;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: rgba(50,10,25,.65);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .4s;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    width: min(500px,95%);
+    padding: 45px 30px;
+    background: var(--cream);
+    border-radius: 28px;
+    text-align: center;
+    transform: scale(.8);
+    transition: .4s;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-content .modal-heart {
+    font-size: 50px;
+}
+
+.modal-content h2 {
+    font-family: Georgia, serif;
+    color: var(--rose);
+    margin: 15px 0;
+}
+
+.modal-content p {
+    line-height: 1.8;
+    color: #714354;
+}
+
+.close-modal {
+    margin-top: 25px;
+    border: none;
+    background: var(--rose);
+    color: white;
+    padding: 11px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   FINAL SURPRISE
+========================================================= */
+
+.final-section {
+    text-align: center;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.final-box {
+    max-width: 700px;
+    margin: auto;
+}
+
+.final-heart {
+    font-size: 100px;
+    cursor: pointer;
+    display: inline-block;
+    animation: heartbeat 1.5s infinite;
+}
+
+.final-box h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(2.5rem,7vw,5rem);
+    color: var(--wine);
+    margin: 20px 0;
+}
+
+.final-message {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: 1s ease;
+}
+
+.final-message.show {
+    max-height: 300px;
+    opacity: 1;
+}
+
+.final-message p {
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 2;
+    color: #704354;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+    padding: 30px 20px 50px;
+    color: #936174;
+    font-family: Georgia, serif;
+}
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+.floating-heart {
+    position: fixed;
+    bottom: -40px;
+    pointer-events: none;
+    z-index: 2000;
+    animation: floatHeart linear forwards;
+}
+
+@keyframes floatHeart {
+
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(.7);
+    }
+
+    15% {
+        opacity: .8;
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translateY(-110vh)
+            translateX(var(--drift))
+            scale(1.4)
+            rotate(25deg);
+    }
+}
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 8px;
+    height: 14px;
+    z-index: 6000;
+    animation: confettiFall 2.7s ease-out forwards;
+}
+
+@keyframes confettiFall {
+
+    to {
+        transform:
+            translateY(110vh)
+            translateX(var(--x))
+            rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes heartbeat {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.15);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes pulse {
+
+    0%,100% {
+        opacity: .5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:750px) {
+
+    .gallery,
+    .open-when-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photo,
+    .photo:nth-child(2),
+    .photo:nth-child(3) {
+        height: 350px;
+        transform: none;
+    }
+
+    .letter {
+        padding: 30px 22px;
+    }
+
+    section:not(.hero) {
+        padding: 75px 15px;
+    }
+}
+
+@media(max-width:500px) {
+
+    .hero {
+        min-height: 95vh;
+    }
+
+    .hero h1 {
+        font-size: 3.1rem;
+    }
+
+    .envelope-wrapper {
+        width: 300px;
+        height: 200px;
+    }
+
+    .gift-card {
+        padding: 35px 20px;
+    }
+
+    .typewriter {
+        font-size: 1rem;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     OPTIONAL BACKGROUND MUSIC
+
+     Put your music file in the same folder and rename it:
+     love-song.mp3
+
+     Example:
+     <audio id="music" src="love-song.mp3"></audio>
+========================================================= -->
+
+<audio id="music" loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- MUSIC BUTTON -->
+
+<button class="music-btn" id="musicButton" title="Music">
+    🎵
+</button>
+
+
+<!-- =========================================================
+     INTRO SCREEN
+========================================================= -->
+
+<div id="introScreen">
+
+    <div class="intro-content">
+
+        <div class="intro-heart">
+            ❤️
+        </div>
+
+        <h1>Something Special</h1>
+
+        <p>
+            I made this little surprise just for you...
+        </p>
+
+        <button class="start-btn" id="startButton">
+            Open My Surprise ✨
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            A little something from my heart
+        </div>
+
+        <!-- CHANGE HER NAME -->
+
+        <h1>
+            For My
+            <span>Amsiha ❤️</span>
+        </h1>
+
+        <p class="hero-description">
+            Some gifts come in boxes.
+            Some come in envelopes.
+            And some are simply little reminders
+            of how special someone is.
+        </p>
+
+
+        <!-- ENVELOPE -->
+
+        <div class="envelope-area">
+
+            <div
+                class="envelope-wrapper"
+                id="envelope"
+                tabindex="0"
+                role="button"
+                aria-label="Open your love letter"
+            >
+
+                <div class="envelope">
+
+                    <div class="envelope-body"></div>
+
+                    <div class="flap"></div>
+
+                    <div class="seal">
+                        ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="open-text">
+                Click the envelope to open your surprise 💌
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LOVE LETTER
+========================================================= -->
+
+<section class="letter-section">
+
+    <div class="section-container">
+
+        <h2 class="section-title">
+            A Letter For You
+        </h2>
+
+        <p class="section-subtitle">
+            Words I wanted you to have forever.
+        </p>
+
+
+        <div class="letter">
+
+            <div class="letter-top">
+                💌
+            </div>
+
+            <div class="typewriter" id="letterText"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     GIFT
+========================================================= -->
+
+<section>
+
+    <div class="section-container">
+
+        <h2 class="section-title">
+            Your Gift 🎁
+        </h2>
+
+        <p class="section-subtitle">
+            Because you deserve a little pampering.
+        </p>
+
+
+        <div class="gift-container">
+
+            <div class="gift-card">
+
+                <div class="gift-icon">
+                    🌹
+                </div>
+
+                <div class="gift-title">
+                    A Day Made For You
+                </div>
+
+                <!-- CHANGE THIS -->
+
+                <div class="gift-value">
+                    Happy Anniversary bubu
+                </div>
+
+                <p class="gift-description">
+                    A relaxing day, delicious food,
+                    lots of laughter, and most importantly...
+                    time together.
+                    ❤️
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PHOTO MEMORIES
+========================================================= -->
+
+<section>
+
+    <div class="section-container">
+
+        <h2 class="section-title">
+            Our Little Memories 📸
+        </h2>
+
+        <p class="section-subtitle">
+            Replace these placeholders with your favorite photos.
+        </p>
+
+
+        <div class="gallery">
+
+
+            <!--
+                Replace the placeholder div with:
+
+                <img src="photo1.jpg" alt="Our memory">
+
+                Put photo1.jpg in the same folder as index.html.
+            -->
+
+            <div class="photo">
+
+                <div class="photo-placeholder">
+                    📸<br><br>
+                    Our First Memory
+                </div>
+
+            </div>
+
+
+            <div class="photo">
+
+                <div class="photo-placeholder">
+                    💕<br><br>
+                    That Beautiful Day
+                </div>
+
+            </div>
+
+
+            <div class="photo">
+
+                <div class="photo-placeholder">
+                    🌹<br><br>
+                    One Of My Favorite Memories
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     OPEN WHEN
+========================================================= -->
+
+<section>
+
+    <div class="section-container">
+
+        <h2 class="section-title">
+            Open When... 💕
+        </h2>
+
+        <p class="section-subtitle">
+            Little messages for different moments.
+        </p>
+
+
+        <div class="open-when-grid">
+
+
+            <button
+                class="when-card"
+                data-title="Open When You're Sad"
+                data-message="Remember that you don't have to face everything alone. I'm always here for you. Take a deep breath, smile a little, and remember that someone out there loves you more than words can explain. ❤️"
+            >
+
+                <div class="when-icon">
+                    🌧️
+                </div>
+
+                <h3>
+                    You're Sad
+                </h3>
+
+                <p>
+                    A little reminder for a difficult day.
+                </p>
+
+            </button>
+
+
+            <button
+                class="when-card"
+                data-title="Open When You Miss Me"
+                data-message="Close your eyes for a moment and imagine me sitting right beside you. Until we can be together again, keep this little reminder that you are always somewhere in my thoughts. 💕"
+            >
+
+                <div class="when-icon">
+                    🥺
+                </div>
+
+                <h3>
+                    You Miss Me
+                </h3>
+
+                <p>
+                    For those moments when we're apart.
+                </p>
+
+            </button>
+
+
+            <button
+                class="when-card"
+                data-title="Open When You Need A Smile"
+                data-message="Congratulations! You have officially received a digital hug from me. 🤗 Now smile. Yes, I'm serious. You look even more beautiful when you smile. ❤️"
+            >
+
+                <div class="when-icon">
+                    ☀️
+                </div>
+
+                <h3>
+                    You Need A Smile
+                </h3>
+
+                <p>
+                    Emergency happiness delivery.
+                </p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MODAL
+========================================================= -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-heart">
+            💌
+        </div>
+
+        <h2 id="modalTitle">
+            Open When...
+        </h2>
+
+        <p id="modalMessage"></p>
+
+        <button class="close-modal" id="closeModal">
+            Close ❤️
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FINAL SURPRISE
+========================================================= -->
+
+<section class="final-section">
+
+    <div class="final-box">
+
+        <div
+            class="final-heart"
+            id="finalHeart"
+            title="Click me"
+        >
+            ❤️
+        </div>
+
+        <h2>
+            One Last Thing...
+        </h2>
+
+        <div class="final-message" id="finalMessage">
+
+            <p>
+                No matter where life takes us,
+                I hope we always find reasons to laugh,
+                reasons to celebrate,
+                and reasons to choose each other.
+
+                <br><br>
+
+                You are one of the most beautiful
+                parts of my story.
+
+                <br><br>
+
+                I love you. ❤️
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    Made with ❤️ just for you.
+</footer>
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const introScreen =
+    document.getElementById("introScreen");
+
+const startButton =
+    document.getElementById("startButton");
+
+const envelope =
+    document.getElementById("envelope");
+
+const music =
+    document.getElementById("music");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+const letterText =
+    document.getElementById("letterText");
+
+const modal =
+    document.getElementById("modal");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalMessage =
+    document.getElementById("modalMessage");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const finalHeart =
+    document.getElementById("finalHeart");
+
+const finalMessage =
+    document.getElementById("finalMessage");
+
+
+/* =========================================================
+   LOVE LETTER
+========================================================= */
+
+const loveLetter = `
+My Beautiful,
+
+If you're reading this, then you probably already know
+that I wanted to make something a little different for you.
+
+I could have simply bought you a gift,
+but I wanted to create something that you could keep,
+open again, and remember.
+
+Thank you for all the little moments,
+the conversations, the laughter,
+the smiles, and everything that makes being around you special.
+
+I hope this little surprise reminds you
+just how loved and appreciated you are.
+
+And if I could give you one thing,
+it would be the ability to see yourself
+through my eyes for just one moment.
+
+Then you would understand
+just how special you really are.
+
+With all my love,
+Your Favorite Person ❤️
+`;
+
+let letterStarted = false;
+
+function typeLetter() {
+
+    if (letterStarted) return;
+
+    letterStarted = true;
+
+    let index = 0;
+
+    function type() {
+
+        if (index < loveLetter.length) {
+
+            letterText.textContent +=
+                loveLetter.charAt(index);
+
+            index++;
+
+            setTimeout(type, 28);
+
+        }
+
+    }
+
+    type();
+}
+
+
+/* =========================================================
+   START EXPERIENCE
+========================================================= */
+
+startButton.addEventListener("click", () => {
+
+    introScreen.classList.add("hide");
+
+    setTimeout(() => {
+
+        try {
+
+            music.volume = 0.35;
+
+            music.play();
+
+            musicButton.textContent = "🔊";
+
+        } catch (error) {
+
+            console.log("Music requires user interaction.");
+
+        }
+
+    }, 500);
+
+});
+
+
+/* =========================================================
+   ENVELOPE
+========================================================= */
+
+let envelopeOpened = false;
+
+function openEnvelope() {
+
+    if (envelopeOpened) return;
+
+    envelopeOpened = true;
+
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+
+        typeLetter();
+
+        createConfetti();
+
+        for (let i = 0; i < 25; i++) {
+
+            setTimeout(createHeart, i * 100);
+
+        }
+
+    }, 900);
+
+}
+
+envelope.addEventListener(
+    "click",
+    openEnvelope
+);
+
+envelope.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openEnvelope();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+let musicPlaying = false;
+
+musicButton.addEventListener("click", () => {
+
+    if (musicPlaying) {
+
+        music.pause();
+
+        musicButton.textContent = "🎵";
+
+    } else {
+
+        music.play();
+
+        musicButton.textContent = "🔊";
+
+    }
+
+    musicPlaying = !musicPlaying;
+
+});
+
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+function createHeart() {
+
+    const heart =
+        document.createElement("div");
+
+    heart.className =
+        "floating-heart";
+
+    const hearts = [
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "💓",
+        "♥"
+    ];
+
+    heart.textContent =
+        hearts[
+            Math.floor(
+                Math.random() * hearts.length
+            )
+        ];
+
+    heart.style.left =
+        Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+        12 + Math.random() * 22 + "px";
+
+    heart.style.animationDuration =
+        5 + Math.random() * 5 + "s";
+
+    heart.style.setProperty(
+        "--drift",
+        Math.random() * 180 - 90 + "px"
+    );
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 10000);
+
+}
+
+
+/* =========================================================
+   CONTINUOUS HEARTS
+========================================================= */
+
+setInterval(() => {
+
+    if (!document.hidden) {
+
+        createHeart();
+
+    }
+
+}, 1400);
+
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+function createConfetti() {
+
+    const colors = [
+        "#e88da8",
+        "#b94b70",
+        "#f3c1cf",
+        "#d9a45b",
+        "#fff1e6",
+        "#9e294e"
+    ];
+
+    for (let i = 0; i < 100; i++) {
+
+        const piece =
+            document.createElement("div");
+
+        piece.className =
+            "confetti";
+
+        piece.style.left =
+            Math.random() * 100 + "vw";
+
+        piece.style.background =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        piece.style.width =
+            5 + Math.random() * 7 + "px";
+
+        piece.style.height =
+            8 + Math.random() * 10 + "px";
+
+        piece.style.borderRadius =
+            Math.random() > .5
+                ? "50%"
+                : "2px";
+
+        piece.style.animationDelay =
+            Math.random() * .5 + "s";
+
+        piece.style.setProperty(
+            "--x",
+            Math.random() * 400 - 200 + "px"
+        );
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+
+            piece.remove();
+
+        }, 3500);
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN WHEN CARDS
+========================================================= */
+
+const whenCards =
+    document.querySelectorAll(".when-card");
+
+whenCards.forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        modalTitle.textContent =
+            card.dataset.title;
+
+        modalMessage.textContent =
+            card.dataset.message;
+
+        modal.classList.add("show");
+
+    });
+
+});
+
+
+closeModal.addEventListener(
+    "click",
+    () => {
+
+        modal.classList.remove("show");
+
+    }
+);
+
+
+modal.addEventListener(
+    "click",
+    event => {
+
+        if (event.target === modal) {
+
+            modal.classList.remove("show");
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FINAL SURPRISE
+========================================================= */
+
+finalHeart.addEventListener("click", () => {
+
+    finalMessage.classList.toggle("show");
+
+    createConfetti();
+
+    for (let i = 0; i < 35; i++) {
+
+        setTimeout(
+            createHeart,
+            i * 80
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   ESCAPE KEY FOR MODAL
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "Escape") {
+
+            modal.classList.remove("show");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
